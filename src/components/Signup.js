@@ -30,6 +30,7 @@ const Signup = () => {
     }
     return (
         <>
+        
             <h1>Lets Get Started</h1>
               <form action="" className="form-control">
                 <div>
@@ -56,6 +57,7 @@ const Signup = () => {
 
                 <button onClick={signup} className="btn" type="button">Register</button>
             </form>
+            
         </>
     )
 }
