@@ -1,0 +1,83 @@
+:root{
+    --primary: #000;
+}
+
+.btn--primary {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    border: none;
+    
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    
+    font-family: inherit;
+  }
+  
+  .btn--primary:focus {
+    outline: none;
+  }
+  
+  .btn--primary:active {
+    transform: scale(0.98);
+  }
+
+
+  .btn--secondary {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    border: none;
+    
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    cursor: pointer;
+    text-decoration: none;
+    
+    font-family: inherit;
+  }
+  
+  .btn--secondary:focus {
+    background-color: rgb(255, 255, 255);
+  }
+  
+  .btn--secondary:active {
+    transform: scale(0.98);
+  }
+
+
+
+  .btn--calltoaction {
+    display: inline-block;
+    background: #bd202c;
+    color: #fff;
+    border: none;
+    
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    
+    font-family: inherit;
+  }
+  
+  .btn--calltoaction:focus {
+    outline: none;
+  }
+  
+  .btn--calltoaction:active {
+    transform: scale(0.98);
+  }
+
+  .btn--medium{
+    padding: 10px 20px;
+    font-size: 1.2rem;
+  }
+
+  .btn--large{
+    padding: 12px 26px;
+    font-size: 1.5rem;
+  }
