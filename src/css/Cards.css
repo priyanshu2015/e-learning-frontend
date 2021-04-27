@@ -134,4 +134,29 @@
     }
   }
 
-  
+
+  /* For All Courses */
+
+  .carddeck{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .carddeck .cards__item{
+    flex: none;
+    margin: 0 0 0 0;
+    padding: 1rem 0.5rem;
+    width: 20%;
+  }
+  @media only screen and (max-width: 1024px) {
+    .carddeck .cards__item{
+      width: 33.3333333%;
+    }
+  }
+
+  @media only screen and (max-width: 464px) {
+    .carddeck .cards__item{
+      width: 50%;
+    }
+  }
