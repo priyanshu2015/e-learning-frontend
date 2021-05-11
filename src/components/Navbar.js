@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from './Button';
 import '../css/Navbar.css'
-
+import axios from 'axios';
 function Navbar() {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
@@ -19,10 +19,13 @@ function Navbar() {
         }
     }
 
+    var user = JSON.parse(localStorage.getItem('user-info'));
+
+
     const checkLogin = () => {
         var current = Math.round(Date.now() / 1000);
         console.log(current);
-        var user = JSON.parse(localStorage.getItem('user-info'));
+
         if (user != null) {
             if (current > user.token.exp) {
                 setLoginStatus(false);
@@ -34,11 +37,19 @@ function Navbar() {
             }
         }
     }
-    console.log(isloginned);
 
     useEffect(() => {
         checkLogin();
+        login();
     }, []);
+
+    const [bookList, setBookList] = useState([]);
+    
+    const login = async () => {
+        let loginURL = "http://127.0.0.1:8000/api/login/";
+        const response = await axios.post(loginURL, { "username": "priyanshugupta", "password": "1234" });
+        console.log(response);
+    }
 
 
 
@@ -99,12 +110,13 @@ function Navbar() {
                             {button && !isloginned && <Button >Signup</Button>}
                         </Link>
                         <div class="dropdown">
-                            {isloginned && <button class="circle" onClick={myFunction}>PG</button>}
+                            {isloginned && <button class="circle" onClick={myFunction}>{user.token.data.name[0]}</button>}
                             {!isloginned && !button && <button class="circle" onClick={myFunction}><i class="fas fa-user"></i></button>}
                             <div id="myDropdown" class="dropdown-content">
-                                <a href="#">Link 1</a>
-                                <a href="#">Link 2</a>
-                                <a href="#">Link 3</a>
+                                {!isloginned && <Link to='/login' className='login-link'>Login</Link>}
+                                {!isloginned && <Link to='/signup' className='login-link'>Sign Up</Link>}
+                                {isloginned && <Link to='/login' className='login-link'>My Account</Link>}
+                                {isloginned && <Link to='/signup' className='login-link'>Logout</Link>}
                             </div>
                         </div>
 

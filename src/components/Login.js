@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from './Button';
 import '../css/Login.css'
-import  { Redirect } from 'react-router-dom'
+// import  { Redirect } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
+import { useHistory } from "react-router-dom"
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    //const history = useHistory();
+    let history = useHistory();
     useEffect(() => {
         validateToken()
     }, []);
@@ -27,7 +29,7 @@ const Login = () => {
         //console.warn(email, password);
         let item = { email, password };
         let result;
-        fetch("http://localhost/e-learning-platform/api/login.php", {
+        fetch(window.apiurl + "login.php", {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -46,6 +48,8 @@ const Login = () => {
             localStorage.setItem('user-info', JSON.stringify(data));
             alert(data.message);
             window.location.replace("/");
+            //history.push('/');
+            //<Link to='/' className='login-link'></Link>
         }).catch(async (err) => {
             let x = await err.json();
             console.log(x.message);

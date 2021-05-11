@@ -36,7 +36,7 @@ function AllCoursesCards() {
             src={course.image}
             text={course.title}
             label={course.category_name}
-            path={'/course_detail/?' + course.id}
+            path={'/course_detail/?' + 'id=' + course.id}
           />
 
         ))}
