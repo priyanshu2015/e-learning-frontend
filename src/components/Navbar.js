@@ -40,16 +40,16 @@ function Navbar() {
 
     useEffect(() => {
         checkLogin();
-        login();
+        //login();
     }, []);
 
-    const [bookList, setBookList] = useState([]);
+    // const [bookList, setBookList] = useState([]);
     
-    const login = async () => {
-        let loginURL = "http://127.0.0.1:8000/api/login/";
-        const response = await axios.post(loginURL, { "username": "priyanshugupta", "password": "1234" });
-        console.log(response);
-    }
+    // const login = async () => {
+    //     let loginURL = "http://127.0.0.1:8000/api/login/";
+    //     const response = await axios.post(loginURL, { "username": "priyanshugupta", "password": "1234" });
+    //     console.log(response);
+    // }
 
 
 

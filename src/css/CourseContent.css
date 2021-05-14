@@ -75,7 +75,6 @@
     color: black;
 }
 .video-title.active{
-    
     background-color: rgb(214, 214, 214);
 }
 .video-title:hover{

@@ -19,7 +19,6 @@ const Login = () => {
                 localStorage.removeItem('user-info');
             }
             else{
-                console.log("hello2")
                 window.location.replace("/");
             }
         }
@@ -47,9 +46,9 @@ const Login = () => {
             console.log(data);
             localStorage.setItem('user-info', JSON.stringify(data));
             alert(data.message);
-            window.location.replace("/");
+            window.location.replace("/");    // Reload full page
             //history.push('/');
-            //<Link to='/' className='login-link'></Link>
+            //<Link to='/' className='login-link'></Link>   // will not reload full page just load the components on that path
         }).catch(async (err) => {
             let x = await err.json();
             console.log(x.message);
