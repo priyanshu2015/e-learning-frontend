@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 
 const STYLES = ['btn--primary', 'btn--calltoaction', 'btn--secondary', 'btn--tertiary']
 
-const SIZES = ['btn--medium', 'btn--large'];
+const SIZES = [ 'btn--medium', 'btn--large', 'btn--small'];
 
 export const Button = ({children, type, onClick, buttonStyle,
 buttonSize}) => {

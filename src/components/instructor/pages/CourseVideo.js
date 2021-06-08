@@ -1,21 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import '../../css/CourseContent.css';
 import { useEffect, useState } from 'react';
 import { Markup } from 'interweave';
 //import ReactHtmlParser from "react-html-parser"
+import '../../../css/creator/CourseVideo.css';
 import axios from 'axios';
 
-//comments component
 import CommentsBlock from 'simple-react-comments';
-//import { commentsData } from './data/index'; // Some comment data
 
 
-export default function CourseContent(props) {
-    const [courseVideos, setCourseVideos] = useState([]);
+
+export default function CourseVideo() {
     const [courseVideo, setCourseVideo] = useState([]);
     const [videoId, setVideoId] = useState(0);
-    const [isLoggedIn, setisLoggedIn] = useState(false);
     const [headerState, setHeaderState] = useState(0);
     const [comments, setComments] = useState([
         {
@@ -36,24 +33,13 @@ export default function CourseContent(props) {
         },
     ]
     );
+
     var urlParams = new URLSearchParams(window.location.search);
 
-
-
-    let apiURL = window.apiurl + "list_course_videos.php/";
     let videoURL = window.apiurl + "retrieve_course_video.php/"
-    const fetchData = async () => {
-        if (urlParams.has('id')) {
-            apiURL = apiURL + "?id=" + urlParams.get('id');
-            const response = await axios.get(apiURL);
-
-            setCourseVideos(response.data.data);
-            console.log(courseVideos);
-            console.log(response.data);
-        }
-    }
 
     const fetchVideo = async (vid_id) => {
+        // Add jwt also
         if (vid_id === 0) {
             videoURL = videoURL + "?id=" + urlParams.get('id');
         }
@@ -67,25 +53,48 @@ export default function CourseContent(props) {
 
     }
 
+    useEffect(() => {
+        validateToken();
+        if (urlParams.has('id') && !urlParams.has('video_id')) {
+            fetchVideo(0);
+        }
+        else if (urlParams.has('id') && urlParams.has('video_id')) {
+            fetchVideo(urlParams.get('video_id'));
+            getComments(urlParams.get('video_id'));
+        }
+
+    }, []);
+
     var user = JSON.parse(localStorage.getItem('user-info'));
 
     async function validateToken() {
-        // var user = JSON.parse(localStorage.getItem('user-info'));
+        var user = JSON.parse(localStorage.getItem('user-info'));
         if (user != null) {
             var current = Math.round(Date.now() / 1000);
             if (user.token.exp < current) {
                 localStorage.removeItem('user-info');
-
+                window.location.replace("/login");
             }
             else {
-                setisLoggedIn(true);
+                var is_instructor = user.token.data.is_instructor;
+                if (is_instructor == 0) {
+                    window.location.replace("/");
+                }
             }
         }
+        else {
+            window.location.replace("/login");
+        }
+    }
+
+    const changeHeaderState = async (e, state) => {
+        e.preventDefault();
+        setHeaderState(state);
     }
 
     const getComments = async (vid_id) => {
         if (urlParams.has('id')) {
-            apiURL = window.apiurl + "list_video_comments.php?id=" + vid_id;
+            var apiURL = window.apiurl + "list_video_comments.php?id=" + vid_id;
             const response = await axios.get(apiURL);
             var data = response.data.data;
             console.log(response.data.data);
@@ -105,36 +114,10 @@ export default function CourseContent(props) {
 
     }
 
-    useEffect(() => {
-        validateToken();
-        if (urlParams.has('id') && !urlParams.has('video_id')) {
-            fetchData();
-            fetchVideo(0);
-        }
-        else if (urlParams.has('id') && urlParams.has('video_id')) {
-            fetchData();
-            fetchVideo(urlParams.get('video_id'));
-            getComments(urlParams.get('video_id'));
-        }
-
-    }, []);
-
-
-    var stringToHTML = function (str) {
-        var dom = document.createElement('div');
-        dom.innerHTML = str;
-        return dom;
-    };
-
-    const changeHeaderState = async (e, state) => {
-        e.preventDefault();
-        setHeaderState(state);
-    }
-
 
     return (
-        <div className="main-container">
-            <div className="main-content">
+        <div className="main-video-container">
+            <div className="main-video-content">
                 <div className="video-section">
                     <div className="video-container">
                         {/* <iframe src="https://www.youtube.com/embed/d4u1WNRincc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="On"></iframe> */}
@@ -163,7 +146,7 @@ export default function CourseContent(props) {
                         {headerState == 1 && <CommentsBlock
                             comments={comments}
                             signinUrl={'/login'}
-                            isLoggedIn={isLoggedIn}
+                            isLoggedIn
                             false // set to true if you are using react-router
                             onSubmit={text => {
                                 if (text.length > 0) {
@@ -182,30 +165,14 @@ export default function CourseContent(props) {
                                     console.log('submit:', text);
                                 }
                             }}
-                        />
-                        }
+                        />}
                         {headerState == 2 && <div>No Files Available</div>}
                         {headerState == 3 && <div>No Announcements till now.</div>}
-
-
-
-
                         {/* {ReactHtmlParser(courseVideo.description)} */}
                     </div>
 
                 </div>
 
-            </div>
-            <div className="content-parent">
-                <div className="content-header">
-                    <h2>Course Content</h2></div>
-                <div className="content">
-                    {courseVideos.map((video, index) => (
-                        <a href="#" className={video.id === courseVideo.id ? 'video-title active' : 'video-title'} onClick={() => { fetchVideo(video.id); getComments(video.id); }}>
-                            {index + 1}. {video.title}
-                        </a>
-                    ))}
-                </div>
             </div>
         </div>
     )

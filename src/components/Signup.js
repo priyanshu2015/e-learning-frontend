@@ -26,6 +26,7 @@ const Signup = () => {
         });
         result = await result.json();
         alert(result["message"])
+        window.location.replace("/login"); 
         //history.push("/add");
 
     }

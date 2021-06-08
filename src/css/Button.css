@@ -52,7 +52,8 @@
 
   .btn--calltoaction {
     display: inline-block;
-    background: #bd202c;
+    /* background: #bd202c; */
+    background: #ff0000;
     color: #fff;
     border: none;
     
@@ -72,6 +73,11 @@
     transform: scale(0.98);
   }
 
+  .btn--small{
+    padding: 8px 14px;
+    font-size: 1rem;
+  }
+
   .btn--medium{
     padding: 10px 20px;
     font-size: 1.2rem;
@@ -81,3 +87,5 @@
     padding: 12px 26px;
     font-size: 1.5rem;
   }
+
+  

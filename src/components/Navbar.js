@@ -115,8 +115,9 @@ function Navbar() {
                             <div id="myDropdown" class="dropdown-content">
                                 {!isloginned && <Link to='/login' className='login-link'>Login</Link>}
                                 {!isloginned && <Link to='/signup' className='login-link'>Sign Up</Link>}
-                                {isloginned && <Link to='/login' className='login-link'>My Account</Link>}
-                                {isloginned && <Link to='/signup' className='login-link'>Logout</Link>}
+                                {isloginned && <Link to='/instructor/mycourses' className='login-link'>Instructor</Link>}
+                                {isloginned && <Link to='/myaccount' className='login-link'>My Account</Link>}
+                                {isloginned && <Link to='/logout' className='login-link'>Logout</Link>}
                             </div>
                         </div>
 
